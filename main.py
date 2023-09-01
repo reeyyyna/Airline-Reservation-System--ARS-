@@ -1,3 +1,5 @@
+import random, csv
+
 # Main Program
 try: 
 	while True:
