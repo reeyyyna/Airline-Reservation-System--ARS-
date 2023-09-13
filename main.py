@@ -1,4 +1,20 @@
 import random, csv
+import tkinter
+from tkinter import messagebox
+
+main = Tk()
+
+login_frame = Frame()
+
+main_frame = Frame()
+
+
+button1 = Button(main, text="Seat Map")
+button2 = Button(main, text="Reserve Seat")
+button3 = Button(main, text="Cancel Reservation")
+button4 = Button(main, text="Flight Information")
+button5 = Button(main, text="Refresh System")  # hidden to the users
+
 
 # Main Program
 try: 
