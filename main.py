@@ -31,11 +31,14 @@ button4 = Button(main, text="Flight Information", relief="raise", activeforegrou
 button5 = Button(main, text="Refresh System", relief="raise", activeforeground="white", activebackground="red", justify="center")  # hidden to the users
 
 
-button1.pack(x=80, y=50)
-button2.pack(x=80, y=60)
-button3.pack(x=80, y=70)
-button4.pack(x=80, y=80)
-button5.pack(x=80, y=90)
+button1.place(x=80, y=50)
+button2.place(x=180, y=50)  
+button3.place(x=320, y=50)  
+button4.place(x=520, y=50)  
+button5.place(x=720, y=50)  
+
+
+main.mainloop()
 
 # Main Program
 """try: 
