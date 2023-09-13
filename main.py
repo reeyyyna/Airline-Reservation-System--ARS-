@@ -1,23 +1,44 @@
 import random, csv
-import tkinter
+from tkinter import *
 from tkinter import messagebox
 
 main = Tk()
+main.geometry("1000x1000")
 
 login_frame = Frame()
 
-main_frame = Frame()
+canvas = Canvas(main, width=300)
+canvas.pack(fill=BOTH, expand=True)
+
+main_frame = Frame(canvas)
+canvas.create_window((0,0), window=main_frame, anchor=NW)
+
+# Horizontal Scrollbar
+xscrollbar = Scrollbar(main, orient=HORIZONTAL, command=canvas.xview)
+xscrollbar.pack(side=BOTTOM, fill=X)
+canvas.configure(xscrollcommand=xscrollbar.set)
+
+# Vertical Scrollbar
+yscrollbar = Scrollbar(main, orient=VERTICAL, command=canvas.yview)
+yscrollbar.pack(side=LEFT, fill=Y)
+canvas.configure(yscrollcommand=yscrollbar.set)
 
 
-button1 = Button(main, text="Seat Map")
-button2 = Button(main, text="Reserve Seat")
-button3 = Button(main, text="Cancel Reservation")
-button4 = Button(main, text="Flight Information")
-button5 = Button(main, text="Refresh System")  # hidden to the users
+button1 = Button(main, text="Seat Map", relief="raise", activeforeground="white", activebackground="red", justify="center")
+button2 = Button(main, text="Reserve Seat", relief="raise", activeforeground="white", activebackground="red", justify="center")
+button3 = Button(main, text="Cancel Reservation", relief="raise", activeforeground="white", activebackground="red", justify="center")
+button4 = Button(main, text="Flight Information", relief="raise", activeforeground="white", activebackground="red", justify="center")
+button5 = Button(main, text="Refresh System", relief="raise", activeforeground="white", activebackground="red", justify="center")  # hidden to the users
 
+
+button1.pack(x=80, y=50)
+button2.pack(x=80, y=60)
+button3.pack(x=80, y=70)
+button4.pack(x=80, y=80)
+button5.pack(x=80, y=90)
 
 # Main Program
-try: 
+"""try: 
 	while True:
 		print("\n\n\t\t\t==== AIRLINE RESERVATION SYSTEM ====\n\n")
 		print("\t\t\t1. Display Seat Map")
@@ -31,4 +52,4 @@ try:
 		choice = input("\nEnter your choice: ")
 
 except:
-	print("\nThe system execution is done.")
+	print("\nThe system execution is done.")"""
