@@ -1,15 +1,17 @@
 import random, csv
 from tkinter import *
 from tkinter import messagebox
+from first_frame import *
 
 main = Tk()
-main.geometry("1000x1000")
+main.title("Airline Reservation System")
+main.geometry("1000x500")
 
-login_frame = Frame()
 
 canvas = Canvas(main, width=300)
 canvas.pack(fill=BOTH, expand=True)
 
+# Main Frame
 main_frame = Frame(canvas)
 canvas.create_window((0,0), window=main_frame, anchor=NW)
 
@@ -37,22 +39,9 @@ button3.place(x=320, y=50)
 button4.place(x=520, y=50)  
 button5.place(x=720, y=50)  
 
+# Update the canvas scrolling region
+main_frame.update_idletasks()
+canvas.config(scrollregion=canvas.bbox("all"))
 
 main.mainloop()
 
-# Main Program
-"""try: 
-	while True:
-		print("\n\n\t\t\t==== AIRLINE RESERVATION SYSTEM ====\n\n")
-		print("\t\t\t1. Display Seat Map")
-		print("\t\t\t2. Reserve a Seat")
-		print("\t\t\t3. Cancel Reservation")
-		print("\t\t\t4. Display Available Seats")
-		print("\t\t\t5. Display Flight Information")
-		print("\t\t\t6. Refresh System and CSV Data")
-		print("\t\t\t7. Exit")
-
-		choice = input("\nEnter your choice: ")
-
-except:
-	print("\nThe system execution is done.")"""
