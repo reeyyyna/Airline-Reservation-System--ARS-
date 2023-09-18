@@ -2,29 +2,100 @@ import tkinter as tk
 from tkinter import messagebox
 
 def open_main_frame():
-    # Code to open the main frame goes here
-    main_frame = tk.Toplevel(main)
-    main_frame.title("Main Frame")
+    main.deiconify()
+
 
 def sign_in():  
-    fname = entry1.get()
-    lname = entry2.get()
-    age = entry3.get()
+    fname = entry1.get().strip()
+    lname = entry2.get().strip()
+    age = entry3.get().strip()
+
+    print(f"fname: {fname}, lname: {lname}, age: {age}")  # Debugging line
  
-    if fname == "Quennie" and lname == "Soberano" and age == 20:
+    if fname.lower() == "Quennie" and lname.lower() == "Soberano" and age == 20:
         open_main_frame()
     else:      
         messagebox.showerror("Error", "Sign-in failed. Please try again.")
 
 def sign_up():
-    fname = entry1.get()
-    lname = entry2.get()
-    age = entry3.get()
 
-    if fname == "Quennie" and lname == "Soberano" and age == 20:
-        open_main_frame()
-    else:
-        messagebox.showerror("Error", "Sign-up failed. Please try again.")
+    main.withdraw()
+
+    sub = tk.Toplevel()
+    sub.title("Sign-up")
+    sub.geometry("500x500")
+
+    sign_up_info = tk.Frame(sub)
+    sign_up_info.pack()
+
+    def proceed():
+        open_main_frame() 
+
+    def cancel():
+        response = messagebox.askyesno("Cancel Sign-up", "Are you sure to exit?")
+        if response:
+            sub.destroy()
+            open_main_frame()
+
+    # Labels
+    fname_label = tk.Label(sign_up_info, text="First Name")
+    lname_label = tk.Label(sign_up_info, text="Last Name")
+    age_label = tk.Label(sign_up_info, text="Age")
+    province_label = tk.Label(sign_up_info, text="Province")
+    city_label = tk.Label(sign_up_info, text="City")
+    municipality_label = tk.Label(sign_up_info, text="Municipality")
+    brgy_label = tk.Label(sign_up_info, text="Barangay")
+    street_label = tk.Label(sign_up_info, text="Street Address")
+
+    # Entries
+    fname_entry = tk.Entry(sign_up_info, bd=10)
+    lname_entry = tk.Entry(sign_up_info, bd=10)
+    age_entry = tk.Entry(sign_up_info, bd=10)
+    province_entry = tk.Entry(sign_up_info, bd=10)
+    municipality_entry = tk.Entry(sign_up_info, bd=10)
+    brgy_entry = tk.Entry(sign_up_info, bd=10)
+    street_entry = tk.Entry(sign_up_info, bd=10)
+
+    # Button
+    proceed = tk.Button(sign_up_info, text="Proceed", command=proceed)
+    cancel = tk.Button(sign_up_info, text="Cancel", command=cancel)
+
+    # Layout
+    row_num = 0
+    fname_label.grid(row=row_num, column=0, padx=10, pady=5, sticky="e")
+    fname_entry.grid(row=row_num, column=1, padx=10, pady=5)
+
+    row_num += 1
+    lname_label.grid(row=row_num, column=0, padx=10, pady=5, sticky="e")
+    lname_entry.grid(row=row_num, column=1, padx=10, pady=5)
+
+    row_num += 1
+    age_label.grid(row=row_num, column=0, padx=10, pady=5, sticky="e")
+    age_entry.grid(row=row_num, column=1, padx=10, pady=5)
+
+    row_num += 1
+    province_label.grid(row=row_num, column=0, padx=10, pady=5, sticky="e")
+    province_entry.grid(row=row_num, column=1, padx=10, pady=5)
+
+    row_num += 1
+    municipality_label.grid(row=row_num, column=0, padx=10, pady=5, sticky="e")
+    municipality_entry.grid(row=row_num, column=1, padx=10, pady=5)
+
+    row_num += 1
+    brgy_label.grid(row=row_num, column=0, padx=10, pady=5, sticky="e")
+    brgy_entry.grid(row=row_num, column=1, padx=10, pady=5)
+
+    row_num += 1
+    street_label.grid(row=row_num, column=0, padx=10, pady=5, sticky="e")
+    street_entry.grid(row=row_num, column=1, padx=10, pady=5)
+
+    row_num += 1
+    proceed.grid(row=row_num, column=0, columnspan=2, padx=10, pady=10)
+    cancel.grid(row=row_num, column=1, columnspan=2, padx=10, pady=10)
+
+    sub.protocol("WM_DELETE_WINDOW", open_main_frame)
+
+
 
 main = tk.Tk()
 main.title("Sign-in/Sign-up")
