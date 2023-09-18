@@ -2,7 +2,31 @@ import tkinter as tk
 from tkinter import messagebox
 import mysql.connector
 
-storage_info = "user_info.txt"
+# storage_info = "user_info.txt"
+mydb = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="Iamquennie16??",
+    database="sys",
+    auth_plugin="mysql_native_password")
+
+
+mycursor = mydb.cursor()
+
+# Create the users table if it doesn't exist
+mycursor.execute("""
+    CREATE TABLE IF NOT EXISTS users (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        first_name VARCHAR(255),
+        last_name VARCHAR(255),
+        age INT,
+        province VARCHAR(255),
+        municipality VARCHAR(255),
+        brgy VARCHAR(255),
+        street_address VARCHAR(255)
+    )
+""")
+
 
 def open_main_frame():
     main.deiconify()
@@ -13,16 +37,19 @@ def sign_in():
     lname = entry2.get().strip()
     age = entry3.get().strip()
 
-    with open(storage_info, "r") as file:
-        for line in file:
-            parts = line.strip().split(",")
-            if len(parts) == 8:
-                db_fname, db_lname, db_age, db_province, db_municipality, db_brgy, db_street = parts
-                if fname.lower() == db_fname.lower and lname.lower() == db_lname.lower() and age == db_age:
-                    open_main_frame()
-                    return
-    
-    messagebox.showerror("Error", "Sign-in failed. Please try again.")
+    # Query the database for the user
+    sql = "SELECT * FROM users WHERE first_name = %s AND last_name = %s AND age = %s"
+    val = (fname, lname, age)
+
+    mycursor.execute(sql, val)
+    result = mycursor.fetchone()
+
+    if result:
+        open_main_frame()
+    else:
+        messagebox.showerror("Error", "Sign-in failed. Please try again.")
+
+   
 
 def sign_up():
 
@@ -44,11 +71,15 @@ def sign_up():
         municipality = municipality_entry.get()
         brgy = brgy_entry.get()
         street = street_entry.get()
-
-        # save the information
-        with open(storage_info, "a") as file:
-            file.write(f"{fname}, {lname}, {age}, {province}, {municipality}, {brgy}, {street}\n")
         
+
+        # Insert the user information into the database
+        sql = "INSERT INTO users (first_name, last_name, age, province, municipality, brgy, street_address) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+        val = (fname, lname, age, province, municipality, brgy, street)
+
+        mycursor.execute(sql, val)
+        mydb.commit()  # Commit the changes to the database
+
         messagebox.showinfo("Success", "Sign-up Successfully!")
         sub.destroy()
         open_main_frame() 
