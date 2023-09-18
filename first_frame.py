@@ -1,5 +1,8 @@
 import tkinter as tk
 from tkinter import messagebox
+import mysql.connector
+
+storage_info = "user_info.txt"
 
 def open_main_frame():
     main.deiconify()
@@ -10,12 +13,16 @@ def sign_in():
     lname = entry2.get().strip()
     age = entry3.get().strip()
 
-    print(f"fname: {fname}, lname: {lname}, age: {age}")  # Debugging line
- 
-    if fname.lower() == "Quennie" and lname.lower() == "Soberano" and age == 20:
-        open_main_frame()
-    else:      
-        messagebox.showerror("Error", "Sign-in failed. Please try again.")
+    with open(storage_info, "r") as file:
+        for line in file:
+            parts = line.strip().split(",")
+            if len(parts) == 8:
+                db_fname, db_lname, db_age, db_province, db_municipality, db_brgy, db_street = parts
+                if fname.lower() == db_fname.lower and lname.lower() == db_lname.lower() and age == db_age:
+                    open_main_frame()
+                    return
+    
+    messagebox.showerror("Error", "Sign-in failed. Please try again.")
 
 def sign_up():
 
@@ -28,7 +35,22 @@ def sign_up():
     sign_up_info = tk.Frame(sub)
     sign_up_info.pack()
 
+
     def proceed():
+        fname = fname_entry.get()
+        lname = lname_entry.get()
+        age = age_entry.get()
+        province = province_entry.get()
+        municipality = municipality_entry.get()
+        brgy = brgy_entry.get()
+        street = street_entry.get()
+
+        # save the information
+        with open(storage_info, "a") as file:
+            file.write(f"{fname}, {lname}, {age}, {province}, {municipality}, {brgy}, {street}\n")
+        
+        messagebox.showinfo("Success", "Sign-up Successfully!")
+        sub.destroy()
         open_main_frame() 
 
     def cancel():
@@ -42,7 +64,6 @@ def sign_up():
     lname_label = tk.Label(sign_up_info, text="Last Name")
     age_label = tk.Label(sign_up_info, text="Age")
     province_label = tk.Label(sign_up_info, text="Province")
-    city_label = tk.Label(sign_up_info, text="City")
     municipality_label = tk.Label(sign_up_info, text="Municipality")
     brgy_label = tk.Label(sign_up_info, text="Barangay")
     street_label = tk.Label(sign_up_info, text="Street Address")
