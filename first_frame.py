@@ -6,16 +6,22 @@ def open_main_frame():
     main_frame = tk.Toplevel(main)
     main_frame.title("Main Frame")
 
-def sign_in():
-    # Add your sign-in logic here
-    if sign_in_successful:  # Replace with your sign-in validation
+def sign_in():  
+    fname = entry1.get()
+    lname = entry2.get()
+    age = entry3.get()
+ 
+    if fname == "Quennie" and lname == "Soberano" and age == 20:
         open_main_frame()
-    else:
+    else:      
         messagebox.showerror("Error", "Sign-in failed. Please try again.")
 
 def sign_up():
-    # Add your sign-up logic here
-    if sign_up_successful:  # Replace with your sign-up validation
+    fname = entry1.get()
+    lname = entry2.get()
+    age = entry3.get()
+
+    if fname == "Quennie" and lname == "Soberano" and age == 20:
         open_main_frame()
     else:
         messagebox.showerror("Error", "Sign-up failed. Please try again.")
@@ -39,15 +45,15 @@ entry3 = tk.Entry(login_frame, bd=10)
 first_button = tk.Button(login_frame, text="Sign-in", command=sign_in)
 second_button = tk.Button(login_frame, text="Sign-up", command=sign_up)
 
-label1.place(x=20, y=20)
-label2.place(x=20, y=50)
-label3.place(x=20, y=80)
+label1.grid(row=0, column=0, padx=20, pady=10, sticky="w")
+label2.grid(row=1, column=0, padx=20, pady=10, sticky="w")
+label3.grid(row=2, column=0, padx=20, pady=10, sticky="w")
 
-entry1.place(x=120, y=20)
-entry2.place(x=120, y=50)
-entry3.place(x=120, y=80)
+entry1.grid(row=0, column=1, padx=20, pady=10)
+entry2.grid(row=1, column=1, padx=20, pady=10)
+entry3.grid(row=2, column=1, padx=20, pady=10)
 
-first_button.place(x=20, y=120)
-second_button.place(x=120, y=120)
+first_button.grid(row=3, column=0, columnspan=2, pady=10)
+second_button.grid(row=3, column=1, columnspan=2, pady=10)
 
 main.mainloop()
